@@ -1,21 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Tu bude logika extension
-  console.log('Extension je načítaná');
+  // Extension logic here
+  console.log('Extension loaded');
 
-  // Načítanie vybraného textu a stavu z storage
-  chrome.storage.local.get(['selectedText', 'showSummarization'], function(result) {
-    const contentDiv = document.getElementById('content');
-    const summarizationDiv = document.getElementById('summarization');
-    
-    if (result.selectedText) {
-      contentDiv.textContent = "Vybraný text: " + result.selectedText;
-    }
-    
-    // Zobrazenie alebo skrytie summarization správy
-    if (result.showSummarization) {
-      summarizationDiv.style.display = 'block';
-    } else {
-      summarizationDiv.style.display = 'none';
+  const summarizationDiv = document.getElementById('summarization');
+
+  function updateSummarization() {
+    chrome.storage.local.get(['showSummarization', 'summarization'], function(result) {
+      if (result.showSummarization) {
+        summarizationDiv.style.display = 'block';
+        summarizationDiv.innerHTML = result.summarization || "Here will come summarization from GPT";
+      } else {
+        summarizationDiv.style.display = 'none';
+      }
+    });
+  }
+
+  // Initial load
+  updateSummarization();
+
+  // Listen for changes in storage and update content
+  chrome.storage.onChanged.addListener(function(changes, area) {
+    if (area === 'local' && (changes.summarization || changes.showSummarization)) {
+      updateSummarization();
     }
   });
 }); 

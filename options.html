@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GPT Context - Settings</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Settings</h1>
+        <form id="optionsForm">
+            <label for="apiKey">OpenAI API key:</label>
+            <input type="text" id="apiKey" name="apiKey" autocomplete="off" />
+
+            <label for="prompt">Prompt:</label>
+            <textarea id="prompt" name="prompt" rows="4"></textarea>
+
+            <button type="submit">Save</button>
+            <div id="status"></div>
+        </form>
+    </div>
+    <script src="options.js"></script>
+</body>
+</html> 
